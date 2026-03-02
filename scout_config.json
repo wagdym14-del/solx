@@ -1,0 +1,6 @@
+{
+  "max_age_minutes": 60,
+  "min_holders": 100,
+  "trending_timeframe": "30m",
+  "top_n": 3
+}

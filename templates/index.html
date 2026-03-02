@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Omar | Unified Intelligence Dashboard</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #121212; color: #E0E0E0; margin: 0; padding: 2rem; }
+        .container { max-width: 1400px; margin: auto; }
+        h1, h2 { color: #4A90E2; border-bottom: 2px solid #4A90E2; padding-bottom: 10px; }
+        h2.scout-title { color: #50E3C2; border-color: #50E3C2; }
+        h2.entities-title { color: #A777FF; border-color: #A777FF; }
+        h2.feed-title { color: #F5A623; border-color: #F5A623; }
+        h2.system-title { color: #E87A5A; border-color: #E87A5A; }
+        h2.monitoring-title { color: #6c99e4; border-color: #6c99e4; }
+        .card-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 1.5rem; }
+        .card { background-color: #1E1E1E; border-radius: 8px; padding: 1.5rem; border-left: 5px solid #4A90E2; box-shadow: 0 4px 8px rgba(0,0,0,0.2); margin-bottom: 1rem; display: flex; flex-direction: column; }
+        .card h3 { margin-top: 0; }
+        .card h4 { margin-top: 10px; margin-bottom: 5px; color: #FFFFFF; }
+        .feed-card { border-left-color: #F5A623; }
+        .entity-card { border-left-color: #A777FF; }
+        .entity-card.inflection-point { border-left-color: #FF4500; background-color: #2a211e; }
+        .entity-card.accumulation { border-left-color: #1E90FF; }
+        .monitoring-card { border-left-color: #6c99e4; padding: 1rem 1.5rem; }
+        .monitoring-card .pair-name { font-size: 1.2rem; font-weight: bold; color: #E0E0E0;}
+        .monitoring-card-content { display: flex; justify-content: space-between; align-items: center; }
+        .warning-display { display: flex; align-items: center; gap: 0.5rem; }
+        .warning-label { font-size: 0.9rem; color: #B0B0B0; }
+        .warning-pips { display: flex; gap: 0.3rem; }
+        .pip { width: 10px; height: 10px; border-radius: 50%; background-color: #4A4A4A; }
+        .pip.warn-1 { background-color: #F5A623; }
+        .pip.warn-2 { background-color: #E87A5A; }
+        .pip.warn-3 { background-color: #C62828; animation: pulse 1s infinite; }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(220, 53, 69, 0); } 100% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0); } }
+        .metric { font-size: 0.95rem; color: #B0B0B0; margin-bottom: 8px; }
+        .metric strong { color: #E0E0E0; }
+        .narrative { font-style: italic; color: #C0C0C0; margin-top: 10px; border-top: 1px solid #333; padding-top: 10px; }
+        .scout-form { background-color: #1E1E1E; padding: 2rem; border-radius: 8px; border-left: 5px solid #50E3C2; margin-bottom: 2rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.5rem; }
+        .form-group { display: flex; flex-direction: column; }
+        .form-group label { color: #B0B0B0; margin-bottom: 0.5rem; font-size: 0.9rem; }
+        .form-group input, .form-group select, .form-group textarea { background-color: #2C2C2C; color: #E0E0E0; border: 1px solid #4A4A4A; border-radius: 4px; padding: 0.75rem; font-size: 1rem; }
+        .btn-save { background-color: #50E3C2; color: #121212; border: none; padding: 0.75rem 1.5rem; border-radius: 4px; font-weight: bold; font-size: 1rem; cursor: pointer; }
+        .btn-action { background-color: #E87A5A; color: #121212; }
+        .form-actions { grid-column: 1 / -1; text-align: right; }
+        .status-box { background-color: #1E1E1E; padding: 1.5rem; border-radius: 8px; border-left: 5px solid #E87A5A; margin-bottom: 2rem; }
+        .status-header { display: flex; justify-content: space-between; align-items: center; gap: 2rem; }
+        .status-metrics { display: flex; gap: 2rem; }
+        .status-metric .label { font-size: 0.9rem; color: #B0B0B0; }
+        .status-metric .value { font-size: 1.5rem; font-weight: bold; letter-spacing: 1px; }
+        .status-metric .value.status-running { color: #50E3C2; }
+        .status-metric .value.status-stopped { color: #E87A5A; }
+        .auth-form { margin-top: 1.5rem; }
+        .auth-form textarea { width: 100%; box-sizing: border-box; min-height: 120px; resize: vertical; }
+        .flash-message { padding: 1rem; margin-bottom: 1rem; border-radius: 4px; }
+        .flash-success { background-color: #2E7D32; color: #FFFFFF; }
+        .flash-error { background-color: #C62828; color: #FFFFFF; }
+        .system-instructions { text-align: center; color: #B0B0B0; margin-top: -1rem; margin-bottom: 2rem; font-style: italic; }
+        .no-data { color: #777; font-style: italic; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Omar | Unified Intelligence Dashboard</h1>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message flash-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <h2 class="system-title">System Control</h2>
+        <div class="status-box">
+            <div class="status-header">
+                <div class="status-metrics">
+                    <div class="status-metric">
+                        <div class="label">Director Status</div>
+                        {% if data.system_status == 'RUNNING' %}
+                            <div class="value status-running">RUNNING</div>
+                        {% else %}
+                            <div class="value status-stopped">STOPPED</div>
+                        {% endif %}
+                    </div>
+                    <div class="status-metric">
+                        <div class="label">Auth Cookie Status</div>
+                        {% if auth_info.exists %}
+                            <div class="value status-running">{{ auth_info.cookies_count }} COOKIES</div>
+                        {% else %}
+                            <div class="value status-stopped">MISSING</div>
+                        {% endif %}
+                    </div>
+                    <div class="status-metric">
+                        <div class="label">Session Valid</div>
+                        {% if auth_info.is_valid %}
+                            <div class="value status-running">VALID</div>
+                        {% else %}
+                            <div class="value status-stopped">INVALID</div>
+                        {% endif %}
+                    </div>
+                    <div class="status-metric">
+                        <div class="label">Active Pairs</div>
+                        <div class="value">{{ stats.monitored_pairs }}</div>
+                    </div>
+                    <div class="status-metric">
+                        <div class="label">Tracked Entities</div>
+                        <div class="value">{{ stats.entities }}</div>
+                    </div>
+                    <div class="status-metric">
+                        <div class="label">Last Dashboard Update</div>
+                        <div class="value" style="font-size: 0.85rem;">
+                            {{ stats.last_updated or 'N/A' }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% if data.system_status == 'STOPPED' %}
+            <p class="system-instructions">To start the system, run <strong>python main.py</strong> in your terminal.</p>
+            {% endif %}
+            <div class="auth-form">
+                <form action="/open-login-browser" method="POST">
+                    <p class="system-instructions">
+                        Click the button below to open a private browser window and log in to axiom.trade manually.
+                        When you finish and close the window, your cookies will be saved automatically for the Director.
+                        {% if auth_info.last_updated %}
+                            <br/>Last saved at: {{ auth_info.last_updated }}
+                        {% endif %}
+                        {% if auth_info.exists %}
+                            <br/>Current status: {{ auth_info.cookies_count }} cookies saved
+                            {% if auth_info.is_valid %}
+                                ✅ Session is valid
+                            {% else %}
+                                ⚠️ Session may be expired
+                            {% endif %}
+                        {% endif %}
+                    </p>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-save btn-action">Open Manual Login Browser</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <h2 class="scout-title">Scout Control Panel</h2>
+        <div class="card">
+            <form action="/config" method="POST" class="scout-form">
+                <div class="form-group">
+                    <label for="max_age_minutes">Max Pair Age (minutes)</label>
+                    <input type="number" id="max_age_minutes" name="max_age_minutes" value="{{ scout_config.max_age_minutes }}">
+                </div>
+                <div class="form-group">
+                    <label for="min_holders">Min Holders</label>
+                    <input type="number" id="min_holders" name="min_holders" value="{{ scout_config.min_holders }}">
+                </div>
+                <div class="form-group">
+                    <label for="trending_timeframe">Trending Timeframe</label>
+                    <select id="trending_timeframe" name="trending_timeframe">
+                        {% set timeframes = ['1m', '5m', '30m', '1h'] %}
+                        {% for timeframe in timeframes %}
+                            <option value="{{ timeframe }}" {% if scout_config.trending_timeframe == timeframe %}selected{% endif %}>{{ timeframe }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="top_n">Top N Pairs to Analyze</label>
+                    <input type="number" id="top_n" name="top_n" value="{{ scout_config.top_n }}">
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-save">Update Scout Config</button>
+                </div>
+            </form>
+        </div>
+        
+        <h2 class="monitoring-title">Active Monitoring</h2>
+        <div id="monitoring-container" class="card-container">
+            {% if data.monitored_pairs %}
+                {% for pair_info in data.monitored_pairs %}
+                    <div class="card monitoring-card">
+                        <div class="monitoring-card-content">
+                            <div class="pair-name">{{ pair_info.pair }}</div>
+                            <div class="warning-display">
+                                <span class="warning-label">Warnings:</span>
+                                <div class="warning-pips">
+                                    <div class="pip {{ 'warn-1' if pair_info.warnings >= 1 else '' }}"></div>
+                                    <div class="pip {{ 'warn-2' if pair_info.warnings >= 2 else '' }}"></div>
+                                    <div class="pip {{ 'warn-3' if pair_info.warnings >= 3 else '' }}"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p class="no-data">No pairs are currently being monitored.</p>
+            {% endif %}
+        </div>
+        
+        <h2 class="entities-title">Market Entity Intelligence (Behavior Analysis)</h2>
+        <div id="entity-container" class="card-container">
+            {% if data.market_entities %}
+                {% for entity_id, entity_data in data.market_entities.items() %}
+                    {% set summary = entity_data.get('strategic_summary', {}) %}
+                    {% set card_class = '' %}
+                    {% if summary.decision == 'INFLECTION_POINT_DETECTED' %}
+                        {% set card_class = 'inflection-point' %}
+                    {% elif summary.decision == 'ACCUMULATION_SUSPECTED' %}
+                        {% set card_class = 'accumulation' %}
+                    {% endif %}
+                    <div class="card entity-card {{ card_class }}">
+                        <h3>{{ entity_id }}</h3>
+                        <div class="metric"><strong>Seen On:</strong> {{ entity_data.seen_on_pairs|join(', ') }}</div>
+
+                        {% if summary and summary.decision %}
+                            <h4>Strategic Status: {{ summary.decision }}</h4>
+                            <div class="metric">
+                                <strong>Friction (Avg. Internal Vol):</strong> 
+                                ${{ "{:,.0f}".format(summary.get('friction_coefficient', 0)) }}
+                            </div>
+                            <div class="metric">
+                                <strong>Isolation Score:</strong> 
+                                {{ "%.1f"|format(summary.get('isolation_score', 0) * 100) }}%
+                            </div>
+                            <p class="narrative">{{ summary.narrative }}</p>
+                        {% else %}
+                            <p class="narrative">Awaiting more data for strategic analysis.</p>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p class="no-data">No market entities identified yet.</p>
+            {% endif %}
+        </div>
+
+        <h2 class="feed-title">Tactical Decision Feed</h2>
+        <div id="decision-feed-container" class="card-container">
+            {% if data.decisions %}
+                {% for decision in data.decisions %}
+                    <div class="card feed-card">
+                        <h3>{{ decision.pair_name }} - <span style="color: #F5A623;">{{ decision.decision_type }}</span></h3>
+                        <p><strong>Confidence:</strong> {{ '%.2f'|format(decision.confidence|float) }}</p>
+                        <p><strong>Entity:</strong> {{ decision.entity_id }}</p>
+                        <div class="narrative">
+                            <p>{{ decision.narrative }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p class="no-data">No tactical decisions for display. The system is observing or has no actionable insights at this time.</p>
+            {% endif %}
+        </div>
+
+    </div>
+</body>
+</html>

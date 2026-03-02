@@ -1,0 +1,5 @@
+MAX_CONCURRENT_WORKERS = 5
+DASHBOARD_DATA_FILE = "dashboard_data.json"
+AUTH_FILE = "auth.json"
+EJECTION_THRESHOLD = 3
+

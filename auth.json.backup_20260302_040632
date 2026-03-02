@@ -1,0 +1,85 @@
+{
+  "cookies": [
+    {
+      "name": "__cf_bm",
+      "value": "xdwRgUMxfsd3C7CHAx5Cld0_exsc8l8bpu6tbzp4l4w-1772424332-1.0.1.1-8YaFXedaWzqBTSokLvJqfy.TruNHafVqskNystb5PJOOCcplMzSA6y9pHsAGZFShKU6u8ZRHNXbTKRBXL2tJe14JGeCfGg75G0MwnnRgddU",
+      "domain": ".axiom.trade",
+      "path": "/",
+      "expires": 1772426132.041557,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "_cfuvid",
+      "value": "2mU1JBlSmpL9V_dF12WWIbc5HmvVFMhyEo.WMGmwsBA-1772424352.3786566-1.0.1.1-KQF1ob8uCmHADsrgP.augCtOhBCPBxypMjZbNEq2MlI",
+      "domain": ".challenges.cloudflare.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "__Host-GAPS",
+      "value": "1:8U_V3i9Zijvfj9LPWO8NIl4tP4TOPQ:yxAi9V_Z3zKZWoDy",
+      "domain": "accounts.google.com",
+      "path": "/",
+      "expires": 1806984361.11176,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "g_state",
+      "value": "{\"i_l\":0,\"i_ll\":1772424370439,\"i_b\":\"0wDseG+5VFnHZcVc+cMuvyH85/WCTbew4iZAOb+NDJI\",\"i_e\":{\"enable_itp_optimization\":0}}",
+      "domain": "axiom.trade",
+      "path": "/",
+      "expires": 1787976370,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "NID",
+      "value": "529=kKmqx2nlqoRoywNAxLIPtaxj96OwAPC2trNaLRtPs60VK4ufYBtPbsog8mRYeOD0NXvrZphqdV4ARNP7esSXcdAr8Zd-i_a1t9AXqE2ucrgsOy5LUYn4G7djUtKFx2WlgGjZrplNXwbhQg_wR5fpfswsP9-LXZ0sa6W7C8hcarY5ymTOnOEN8VMfsCjSKZnx0H5n-ctb1QY08AJUqg",
+      "domain": ".google.com",
+      "path": "/",
+      "expires": 1788235568.258887,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    }
+  ],
+  "origins": [
+    {
+      "origin": "https://axiom.trade",
+      "localStorage": [
+        {
+          "name": "theme",
+          "value": "{\"primaryColor\":\"#526FFF\",\"isBrighterTheme\":false,\"colorOverrides\":{},\"backgroundType\":\"solid\",\"chartBackgroundColor\":\"#101114\",\"isDefaultTheme\":false}"
+        },
+        {
+          "name": "LocalStorageSaveLoadAdapter_charts_v4",
+          "value": "[{\"name\":\"Axiom\",\"content\":\"{\\\"content\\\":\\\"{\\\\\\\"layout\\\\\\\":\\\\\\\"s\\\\\\\",\\\\\\\"charts\\\\\\\":[{\\\\\\\"panes\\\\\\\":[{\\\\\\\"sources\\\\\\\":[],\\\\\\\"mainSourceId\\\\\\\":\\\\\\\"_seriesId\\\\\\\",\\\\\\\"stretchFactor\\\\\\\":2000,\\\\\\\"leftAxisesState\\\\\\\":[],\\\\\\\"rightAxisesState\\\\\\\":[{\\\\\\\"state\\\\\\\":{\\\\\\\"id\\\\\\\":\\\\\\\"right-axis\\\\\\\",\\\\\\\"m_priceRange\\\\\\\":null,\\\\\\\"m_isAutoScale\\\\\\\":true,\\\\\\\"m_isPercentage\\\\\\\":false,\\\\\\\"m_isIndexedTo100\\\\\\\":false,\\\\\\\"m_isLog\\\\\\\":false,\\\\\\\"m_isLockScale\\\\\\\":false,\\\\\\\"m_isInverted\\\\\\\":false,\\\\\\\"m_topMargin\\\\\\\":0.1,\\\\\\\"m_bottomMargin\\\\\\\":0.08,\\\\\\\"alignLabels\\\\\\\":true},\\\\\\\"sources\\\\\\\":[\\\\\\\"_seriesId\\\\\\\"]}],\\\\\\\"overlayPriceScales\\\\\\\":{},\\\\\\\"priceScaleRatio\\\\\\\":null,\\\\\\\"isCollapsed\\\\\\\":false}],\\\\\\\"timeScale\\\\\\\":{\\\\\\\"m_barSpacing\\\\\\\":6,\\\\\\\"m_rightOffset\\\\\\\":10},\\\\\\\"chartProperties\\\\\\\":{\\\\\\\"paneProperties\\\\\\\":{\\\\\\\"vertGridProperties.color\\\\\\\":\\\\\\\"rgba(200, 201, 209, 0.1)\\\\\\\",\\\\\\\"horzGridProperties.color\\\\\\\":\\\\\\\"rgba(200, 201, 209, 0.1)\\\\\\\",\\\\\\\"backgroundType\\\\\\\":\\\\\\\"solid\\\\\\\",\\\\\\\"crossHairProperties.color\\\\\\\":\\\\\\\"#C8C9D1\\\\\\\",\\\\\\\"separatorColor\\\\\\\":\\\\\\\"#22242D\\\\\\\",\\\\\\\"background\\\\\\\":\\\\\\\"#101114\\\\\\\"},\\\\\\\"scalesProperties\\\\\\\":{\\\\\\\"textColor\\\\\\\":\\\\\\\"#C8C9D1\\\\\\\",\\\\\\\"lineColor\\\\\\\":\\\\\\\"#22242D\\\\\\\",\\\\\\\"backgroundColor\\\\\\\":\\\\\\\"#101114\\\\\\\",\\\\\\\"axisHighlightColor\\\\\\\":\\\\\\\"rgba(82, 111, 255, 0.25)\\\\\\\",\\\\\\\"crosshairLabelBgColorLight\\\\\\\":\\\\\\\"#FCFCFC\\\\\\\",\\\\\\\"crosshairLabelBgColorDark\\\\\\\":\\\\\\\"#18181A\\\\\\\"},\\\\\\\"priceScaleSelectionStrategyName\\\\\\\":\\\\\\\"auto\\\\\\\"},\\\\\\\"version\\\\\\\":3,\\\\\\\"timezone\\\\\\\":\\\\\\\"Africa/Cairo\\\\\\\"}]}\\\"}\",\"symbol\":\"axiom\",\"resolution\":\"9999999\",\"id\":\"937e1c9032b6b8\",\"timestamp\":1772424334}]"
+        },
+        {
+          "name": "blacklist-migration-v1-complete",
+          "value": "true"
+        },
+        {
+          "name": "regionsV4",
+          "value": "{\"name\":\"GLOBAL\"}"
+        },
+        {
+          "name": "theme-migration-for-text-color-bug-complete",
+          "value": "true"
+        },
+        {
+          "name": "theme-migration-v2-complete",
+          "value": "true"
+        }
+      ]
+    }
+  ]
+}
